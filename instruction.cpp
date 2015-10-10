@@ -1,49 +1,80 @@
+include <iostream>
 #include "instruction.hpp"
 
-bitset<6> Instruction::opcode(){
-  //opcode is the bits 31-26
+using namespace std;
+
+bitset<6> Instruction:: opcode()
+{
   bitset<6> temp;
   int temp_count = 5;
-  for (int i = 31; i > 25 ; i--){
+  for(int i = 31; i > 25; i--){
     temp[temp_count] = bits[i];
     temp_count--;
   }
   return temp;
 }
 
-bitset<5> Instruction::rs(){
-  // for I and R format bit locations are 25-21
-  // no rs for j format
+bitset<5> Instruction:: rs()
+{
+  bitset<5> temp;
+  int temp_count = 4;
+  for(int i = 25; i > 20; i--)
+    {
+      temp[temp_count] = bits[i];
+      temp_count--;
+    }
+  return temp;
 }
 
-bitset<5> Instruction::rt(){
-  // for I and R format bit locations are 20-16
-  // no rt for j format
+bitset<5> Instruction:: rt()
+{
+  bitset<5> temp;
+  int temp_count = 4;
+  for(int i = 20; i > 15; i--)
+    {
+      temp[temp_count] = bits[i];
+      temp_count--;
+    }
+  return temp;
 }
 
-bitset<5> Instruction::rd(){
-  //for R format the rd is bit locations 15-11
-  //no rd for j and I format
+bitset<5> Instruction:: rd()
+{
+  bitset<5> temp;
+  int temp_count = 4;
+  for(int i = 15; i > 10; i--)
+    {
+      temp[temp_count] = bits[i];
+      temp_count--;
+    }
+  return temp;
 }
 
-bitset<5> Instruction::shamt(){
-  //only for R format bit locations are 10-6
+bitset<5> Instruction:: shamt()
+{
+  bitset<5> temp;
+  int temp_count = 4;
+  for(int i = 10; i > 5; i--)
+    {
+      temp[temp_count] = bits[i];
+      temp_count--;
+    }
+  return temp;
 }
 
-bitset<6> Instruction::funct(){
-  //only for R format bit locations are 5-0
+bitset<6> Instruction:: funct()
+{
+  bitset<6> temp;
+  int temp_count = 5;
+  for(int i = 5; i >= 0; i--)
+    {
+      temp[temp_count] = bits[i];
+      temp_count--;
+    }
+  return temp;
 }
 
-bitset<16> Instruction::imm(){
-  //only for I format bit locations are 15-0
+string Instruction:: to_string()
+{
 }
-
-bitset<26> Instruction::jmp_offset(){
-  //only for j format bit locations are 26-0
 }
-
-
-string Instruction::to_string(){
-  //converts the instruction into readable form
-}
-
