@@ -1,4 +1,4 @@
-include <iostream>
+#include <iostream>
 #include "instruction.hpp"
 
 using namespace std;
@@ -77,4 +77,4 @@ bitset<6> Instruction:: funct()
 string Instruction:: to_string()
 {
 }
-}
+
