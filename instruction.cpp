@@ -76,19 +76,17 @@ bitset<6> Instruction:: funct()
 
 bitset<16> Instruction::imm()
 {
-  //15-0
+  //15-0                                                                                                                                                                                              
   bitset<16> temp;
-  int temp_count = 16;
-  for ( int i = 16; i >= 0; i--){
-    temp[temp_count] = bits[i];
-    temp_count--;
+  for ( int i = 15; i >= 0; i--){
+    temp[i] = bits[i];
   }
   return temp;
 }
 
 bitset<26> Instruction::jmp_offset()
 {
-  //26-0
+  //26-0                                                                                                                                                                                              
   bitset<26> temp;
   int temp_count = 25;
   for( int i = 25; i >= 0; i--){
@@ -98,46 +96,49 @@ bitset<26> Instruction::jmp_offset()
   return temp;
 }
 
-
 string Instruction:: to_string()
 {
-  bitset<6> op = this->opcode();
-  bitset<6> zero;
-  bitset<6> j_(2);
-  bitset<6> jal_(3);
-  if ( op == zero ) {
-    //R format
-    bitset<5> rs_ = this->rs();
-    bitset<5> rt_ = this->rt();
-    bitset<5> rd_ = this->rd();
-    bitset<5> shamt_ = this->shamt();
-    bitset<6> func = this->funct();
-    cout << "  R - Format " << endl;
-    cout << "rs : " << reg_names[rs_.to_ulong()] << endl;
-    cout << "rt : " << reg_names[rt_.to_ulong()] << endl;
-    cout << "rd : " << reg_names[rd_.to_ulong()] << endl;
-    cout << "shamt : " << shamt_ << endl;
-    cout << "func : " << r_functions[func.to_ulong()] << endl;
-  }
+  string final;
+  bitset<6> opcode_ = this->opcode();
+  bitset<5> rs_ = this->rs();
+  bitset<5> rt_ = this->rt();
+  bitset<5> rd_ = this->rd();
+  bitset<5> shamt_ = this->shamt();
+  bitset<6> func_ = this->funct();
+  bitset<26> jump_address = this->jmp_offset();
+  bitset<16> imm_ = this->imm();
+  //comparisons                                                                                                                                                                                       
+  bitset<6> zero(0);
+  bitset<6> J_(2);
+  bitset<6> JAL_(3);
+  if (opcode_ == zero){
+    //R-Format func $rd,$rs,$rt                                                                                                                                                                       
+    final.append(r_functions[func_.to_ulong()]);
+    final.append(" ");
+    final.append(reg_names[rd_.to_ulong()]);
+    final.append(", ");
+    final.append(reg_names[rs_.to_ulong()]);
+    final.append(", ");
+    final.append(reg_names[rt_.to_ulong()]);
+  }//end if                                                                                                                                                                                           
   else{
-    if ( op == j_ || op == jal_ ){
-      //j format
-      bitset<26> jump_address = this->jmp_offset();
-      cout << "  J - Format " << endl;
-      cout << "opcode : " << opcodes[op.to_ulong()] << endl;
-      cout << "jump adress : " << jump_address << endl;
-      
-    }
+    if ( opcode_ == J_ || opcode_ == JAL_ ){
+      //J-Format op jmpadd                                                                                                                                                                            
+      final.append(opcodes[opcode_.to_ulong()]);
+      final.append(" ");
+      final.append(jump_address.to_string());
+    }//end if                                                                                                                                                                                         
     else{
-      //I format
-      bitset<5> rs_ = this->rs();
-      bitset<5> rt_ = this->rt();
-      bitset<16> imm_ = this->imm();
-      cout << "  I - Format " << endl;
-      cout << "opcode : " << opcodes[op.to_ulong()] << endl;
-      cout << "rs : " << reg_names[rs_.to_ulong()] << endl;
-      cout << "rt : " << reg_names[rt_.to_ulong()] << endl;
-      cout << "immediate : " << imm_ << endl;
-    }
-  }
+      //I-Format op $rt,$rs,imm                                                                                                                                                                       
+      final.append(opcodes[opcode_.to_ulong()]);
+      final.append(" ");
+      final.append(reg_names[rt_.to_ulong()]);
+      final.append(", ");
+      final.append(reg_names[rs_.to_ulong()]);
+      final.append(", ");
+      final.append(imm_.to_string());
+    }//end else                                                                                                                                                                                       
+  }//end else                                                                                                                                                                                         
+  return final;
 }
+
