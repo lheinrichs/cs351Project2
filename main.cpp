@@ -7,11 +7,18 @@ using namespace std;
 
 
 int main() {
-  Instruction i(4042322160); //decimal equal to 1111 0000 1111 0000 1111 0000 1111 0000
-  //Instruction i(0xF0F0F0F0) ;
-  //Instruction i(string("11110000111100001111000011110000");
-  //same input in hex form and string form
-  cout << i.dump() << endl; //returns the current 32 bit instruction
-  cout << "opcode : " << i.opcode() << endl; //returns the opcode
+  //if you run this you get a seg fault after I
+  //although j alone works
+  //and if you do just R and I it faults then as well...
+  // so yeah
+  Instruction R(0x02734820);
+  cout << endl << R.dump() << endl << endl;;
+  R.to_string();
+  Instruction I(0x8d280000);
+  cout << endl << I.dump() << endl << endl;
+  I.to_string();
+  Instruction J(0x08000000);
+  cout << endl << J.dump() << endl;
+  J.to_string();
 
 }
