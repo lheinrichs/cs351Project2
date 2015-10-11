@@ -5,20 +5,18 @@
 
 using namespace std;
 
+bool go = true;
 
 int main() {
-  //if you run this you get a seg fault after I
-  //although j alone works
-  //and if you do just R and I it faults then as well...
-  // so yeah
-  Instruction R(0x02734820);
-  cout << endl << R.dump() << endl << endl;;
-  R.to_string();
-  Instruction I(0x8d280000);
-  cout << endl << I.dump() << endl << endl;
-  I.to_string();
-  Instruction J(0x08000000);
-  cout << endl << J.dump() << endl;
-  J.to_string();
 
+  Instruction i(0);//R                                                                                                                                
+  Instruction i2(0x08 << 26 | 17 << 21 | 16 << 16 | 0xffff);//I                                                                                       
+  Instruction i3(0xffffffff);
+  Instruction i4(0);
+  Instruction i5(0x02734820);//R                                                                                                                      
+  Instruction i6(0x8d280000);//I                                                                                                                      
+  Instruction i7(0x08000000);//J                                                                                                                      
+  cout << i5.to_string() << endl;
+  cout << i6.to_string() << endl;
+  cout << i7.to_string() << endl;
 }
