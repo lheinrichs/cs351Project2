@@ -208,7 +208,11 @@ string Instruction:: to_string()
       //J-Format op jmpadd
       final.append(opcodes[opcode_.to_ulong()]);
       final.append(" ");
-      final.append(jump_address.to_string());
+      long jmp_bin, jmp_decimal = 0;
+      jmp_bin = jump_address.to_ulong();
+      jmp_decimal = (jmp_bin + 128) % 256 - 128;
+      string signedJump = std::to_string(jmp_decimal);
+      final.append(signedJump);
     }//end if
     else{
       //I-Format op $rt,$rs,imm
@@ -218,7 +222,11 @@ string Instruction:: to_string()
       final.append(", ");
       final.append(reg_names[rs_.to_ulong()]);
       final.append(", ");
-      final.append(imm_.to_string());
+      long bin, decimal = 0;
+      bin = imm_.to_ulong();
+      decimal = (bin + 128) % 256 - 128;
+      string signedInt = std::to_string(decimal);
+      final.append(signedInt);
     }//end else
   }//end else
   //return desired translated instruction
